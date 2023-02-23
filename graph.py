@@ -1,10 +1,15 @@
-#CSC 445 Graph Assignment 2
 #Matt Daves
+#CSC 445 Graph Assignment 2
+#Sources:
+#   https://matplotlib.org/stable/api/matplotlib_configuration_api.html
+#   Install cmd: python -m pip install -U pip
+#                python -m pip install -U matplotlib
+
 
 import matplotlib.pyplot as plt
 import tkinter.filedialog
 
-#Class for our point object
+#Class for Node object
 class point:
     def __init__(self, x, y, name):
         self.x = x
@@ -36,7 +41,7 @@ def main():
         plt.show()
         return
     
-    #code to read input from file and store information to create our points and edges
+    #code to read input from file and store information to create points and edges
     with open(path) as f:
         
         f = f.readlines()
