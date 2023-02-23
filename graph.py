@@ -67,7 +67,7 @@ def main():
                         edgeNum = int(line.strip())
                         needEdgeNum = False
                     else:
-                        row = line.strip().replace(" ", "").split(",")
+                        row = line.split()
                         drawLine(int(row[0]), int(row[1]))
     
     #code to configure plot and add points
