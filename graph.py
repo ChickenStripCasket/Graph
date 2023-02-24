@@ -5,7 +5,6 @@
 #   Install cmd: python -m pip install -U pip
 #                python -m pip install -U matplotlib
 
-
 import matplotlib.pyplot as plt
 import tkinter.filedialog
 
@@ -59,7 +58,7 @@ def main():
                     points.append(point(float(row[0]), float(row[1]), "Node " + str(nodeNum)))
                     x.append(float(row[0]))
                     y.append(float(row[1]))
-                    plot.annotate(nodeNum,(float(row[0])-.12,float(row[1])-.4),fontsize=12)
+                    plot.annotate(nodeNum,(float(row[0])-.2,float(row[1])-.5),fontsize=15)
 
                     index += 1
                     nodeNum += 1      
@@ -77,7 +76,7 @@ def main():
     
     #code to configure plot and add points
     enumerate(points)
-    plt.ylim(min(y) + (min(y)*.50), max(y) + (max(y)*.50))
+    plt.ylim(min(y) - 5, max(y) + 5)
     plot.scatter(x,y, s = 500, picker = True)
     plt.xlabel('x axis') 
     plt.ylabel('y axis') 
