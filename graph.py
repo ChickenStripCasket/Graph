@@ -1,7 +1,7 @@
 #Matt Daves
 #CSC 445 Graph Assignment 2
 #Sources:
-#   https://matplotlib.org/stable/api/matplotlib_configuration_api.html
+#   https://matplotlib.org/stable/index.html
 #   Install cmd: python -m pip install -U pip
 #                python -m pip install -U matplotlib
 
