@@ -100,7 +100,7 @@ def main():
         for point in points:
             if point.x == offset[0] and point.y == offset[1]:
                 return point.name
-    # helper method
+    # helper method to get the edges in our path
     def getPathEdges(edges):
         pathEdges = []
         for i in range(len(edges)-1):
