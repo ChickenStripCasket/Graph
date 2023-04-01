@@ -1,9 +1,8 @@
 #Matt Daves
-#CSC 445 Graph Assignment 2
+#CSC 445 Graph Assignment 3
 #Sources:
 #   https://matplotlib.org/stable/index.html
-#   Install cmd: python -m pip install -U pip
-#                python -m pip install -U matplotlib
+#   Install cmd: python -m pip install -U matplotlib
 
 import matplotlib.pyplot as plt
 import tkinter.filedialog
@@ -31,6 +30,7 @@ def main():
     g = []
     p = []
     e = []
+    edges = []
     g.append(p)
     g.append(e)
     myColor = "grey"
@@ -42,7 +42,7 @@ def main():
         p2 = points[nodeTo]
         x = [p1.x, p2.x]
         y = [p1.y, p2.y]
-        plt.plot(x, y, color = lineColor, zorder = 0)
+        return plt.plot(x, y, color = lineColor, zorder = 0, label=str(nodeFrom)+"-"+str(nodeTo),linewidth = 2.5)
     
     #method to handle Node's click event
 
@@ -103,16 +103,20 @@ def main():
                 NameError
         plt.show()
         return
-
     def matchOffset(offset):
         for point in points:
             if point.x == offset[0] and point.y == offset[1]:
                 return point.name
-            
-    def redraw(nodes):
+    def getPathEdges(edges):
+        pathEdges = []
+        for i in range(len(edges)-1):
+            pathEdges.append(edges[i] + "-" + edges[i+1])
+            pathEdges.append(edges[i+1] + "-" + edges[i])
+        return pathEdges             
+    def redraw(nodes, pathEdges):
         tempPoints = []
         nonPathPoints = []
-        edges = []
+        nonPathEdges = []
         props = {"color": "green"}
         props2 = {"color": "grey"}
         for node in nodes[1:-1]:
@@ -122,11 +126,17 @@ def main():
             if p.name not in nodes:
                 nonPathPoints.append(p)
         
+        
         plotstemp = plot.get_children()
         for p in plotstemp:
             
             if isinstance(p, Line2D):
-                n =1
+                if p.get_label() not in pathEdges:
+                    Artist.update(p,{"color":"black"})
+
+                for edge in pathEdges:
+                    if p.get_label() == edge:
+                        Artist.update(p,props)
                 
             elif isinstance(p,PathCollection):
                 for po in nonPathPoints:
@@ -141,7 +151,13 @@ def main():
                     
                     if point.x == pLoc[0] and point.y == pLoc[1]:                       
                         Artist.update(p, props)
-        
+    def distance(point1, point2):
+        p1 = points[int(point1)]
+        p2 = points[int(point2)]
+        node1 = [p1.x, p1.y]
+        node2 = [p2.x, p2.y]
+        return dist(node1, node2)
+           
     def dijkstras(graph, start, end):
         if graph.get(start) == None or graph.get(end) == None:
             plt.title("Path is not reachable")
@@ -188,15 +204,9 @@ def main():
         
         if shortestDistance[end] != infinity:
             plt.title("Shortest Distance is " +  "{:.2f}".format(shortestDistance[end]) +
-                  "\n" + "optimal path is " + str(currentPath))
-        redraw(currentPath)
+                  "\n" + "Optimal Path is " + str(currentPath))
+        redraw(currentPath,getPathEdges(currentPath))
          
-    def distance(point1, point2):
-        p1 = points[int(point1)]
-        p2 = points[int(point2)]
-        node1 = [p1.x, p1.y]
-        node2 = [p2.x, p2.y]
-        return dist(node1, node2)
     
     #code to read input from file and store information to create points and edges
     with open(path) as f:
@@ -232,7 +242,7 @@ def main():
                         row = line.split()
                         var = distance(row[0], row[1])
                         e.append(({row[0], row[1]}, var))
-                        drawLine(int(row[0]), int(row[1]),"black")
+                        edges.append(drawLine(int(row[0]), int(row[1]), "black"))
 
     #code to configure plot
     enumerate(points)
